@@ -32,8 +32,8 @@ export default function App() {
      <>
        <NavigationContainer >
           <Stack.Navigator screenOptions={{headerShown:false}}>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Details" component={Details} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Details" component={Details} />
           </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style='light' />

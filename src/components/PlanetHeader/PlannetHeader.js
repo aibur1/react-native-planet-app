@@ -6,7 +6,7 @@ import { colors } from '../../theme/colors';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-export default function PlannetHeader({backBtn, title="THE PLANET"}) {
+export default function PlannetHeader({backBtn, title="THE PLANET",}) {
   const navigation = useNavigation();
   return (
     <View style={style.container}>
