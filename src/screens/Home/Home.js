@@ -1,5 +1,12 @@
-import { View, FlatList, SafeAreaView, StyleSheet, Pressable } from 'react-native';
-import React from 'react';
+import { 
+  View, 
+  FlatList, 
+  SafeAreaView, 
+  StyleSheet, 
+  Pressable ,
+  TextInput,
+} from 'react-native';
+import React, {useState} from 'react';
 import Text from '../../components/text/Text';
 import PlannetHeader from '../../components/PlanetHeader/PlannetHeader';
 import { colors } from '../../theme/colors';
@@ -25,19 +32,43 @@ const PlanetItem = ({item}) => {
 }
 
 export default function Home({navigation}) {
+  const [list, setList] = useState(PLANET_LIST);
 
   const renderItem = ({item}) => {
-        return(
-            <PlanetItem item={item} />
-         );
-  }
+        return(<PlanetItem item={item} /> );
+  };
+
+  //pass kora text argument ta ke ei function nilo then 
+  const searchFilter = (text) => {
+    //filter ta kortesi holo main array theke
+    const filteredList = PLANET_LIST.filter(item => {
+      //just nam ta match korte hobe tai nam ta niye aslam filter korar por
+      const itemName = item.name.toLowerCase();
+      //user typed text
+      const userTypedText = text.toLowerCase();
+      // >-1 mane milse
+      return itemName.indexOf(userTypedText) > -1;
+    });
+    setList(filteredList);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
        <PlannetHeader />
+
+       <TextInput 
+          placeholder="Type the planet name"
+          placeholderTextColor={colors.white}
+          autoCorrect={false}
+          style={styles.searchInput}
+          onChangeText={(text) => searchFilter(text)}  // মানে text আরগুমেন্ট টা কে searchFilter ফাংশনে পাস করে দাও
+          
+          />
+
+
        <FlatList 
           contentContainerStyle={styles.list}
-          data={PLANET_LIST}
+          data={list}
           keyExtractor={(item,index) => item.name}
           renderItem={renderItem}
           ItemSeparatorComponent = { () => <View style={styles.separator}/>}
@@ -73,6 +104,14 @@ const styles = StyleSheet.create({
      borderWidth:0.5,
      borderBottomColor:colors.white,
 
+    },
+    searchInput:{
+      padding:spacing[4],
+      color:colors.white,
+      borderBottomColor:colors.white,
+      borderBottomWidth:1,
+      margin:spacing[5],
+      
     }
     
 })
